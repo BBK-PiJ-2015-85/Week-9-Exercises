@@ -27,15 +27,42 @@ public class IntegerTreeNode {
 	}
 	
 	public boolean contains(int num) {
-		if (this.value == num) {
+		if (value == num) {
 			return true;
-		} else if (num > this.value && this.right != null) {
-			return this.right.contains(num);
-		} else if (num < this.value && this.left != null) {
-			return this.left.contains(num);
+		} else if (num > value && right != null) {
+			return right.contains(num);
+		} else if (num < value && left != null) {
+			return left.contains(num);
+		} 
+		return false;
+	}
+	
+	public int getMax() {
+		if (right == null) {
+			return value;
 		} else {
-			return false;
+			return right.getMax();
 		}
 	}
 	
+	public int getMin() {
+		if (left == null) {
+			return value;
+		} else {
+			return left.getMin();
+		}
+	}
+	
+	public String toString() {
+		String str = "";
+		if (left == null && right == null) {
+			return str + "[" + value + " L[] R[]]";
+		} else if (left == null) {
+			return "[" + value + " L[] R" + right.toString() + "]";
+		} else if (right == null) {
+			return "[" + value + " L" + left.toString() + " R[]]";
+		} else {
+			return str + "[" + value + " L" + left.toString() + " R" + right.toString() + "]";
+		}
+	}
 }

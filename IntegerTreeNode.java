@@ -1,4 +1,4 @@
-public class IntegerTreeNode {
+public class IntegerTreeNode implements IntBinTree {
 	
 	private int value;
 	private IntegerTreeNode right;
@@ -64,5 +64,36 @@ public class IntegerTreeNode {
 		} else {
 			return str + "[" + value + " L" + left.toString() + " R" + right.toString() + "]";
 		}
+	}
+	
+	public String toSimpleString() {
+		String str = "";
+		if (left == null && right == null) {
+			return str + "[" + value + "]";
+		} else if (left == null) {
+			return "[" + value + " " + right.toSimpleString() + "]";
+		} else if (right == null) {
+			return "[" + value + " " + left.toSimpleString() + "]";
+		} else {
+			return str + "[" + value + " " + left.toSimpleString() + " " + right.toSimpleString() + "]";
+		}
+	}
+	
+	public int depth() {
+		if (right == null) {
+			if (left == null) {
+				return 0;
+			} else {
+				return 1 + left.depth();
+			}		
+		} else if (left == null) {
+			return 1 + right.depth();
+		} else {
+			if (right.depth() > left.depth()) {
+				return 1 + right.depth();
+			} else {
+				return 1 + left.depth();
+			}
+		}		
 	}
 }

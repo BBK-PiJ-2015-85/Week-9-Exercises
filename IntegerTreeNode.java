@@ -96,4 +96,95 @@ public class IntegerTreeNode implements IntBinTree {
 			}
 		}		
 	}
+	
+	public void delete(int toDelete) {
+		if (value == toDelete) {
+			deleteFirstElement();
+		} else {
+			if (left != null && left.value == toDelete) {
+				//have found the element to delete, now we need to find the element to replace it with.
+				if (left.left == null && left.right == null) {
+					//element to delete is a leaf so will set left to null
+					left = null;
+					return;
+					
+				} else if (left.left == null) {
+					left.value = left.right.getMin();
+					if (left.right.left == null && left.right.right == null) {
+						left.right = null;
+						return;
+					} else {
+						left.right.delete(left.value);
+						return;
+					} 					
+				} else {
+					left.value = left.left.getMax();
+					if (left.left.left == null && left.left.right == null) {
+						left.left = null;
+						return;
+					} else {
+						left.left.delete(left.value);
+						return;
+					}					
+				}
+			} else if (right != null && right.value == toDelete) {
+				//have found the element to delete, now we need to find the element to replace it with.
+				if (right.left == null && right.right == null) {
+					//element to delete is a leaf so will set left to null
+					right = null;
+					return;
+					
+				} else if (right.left == null) {
+					right.value = right.right.getMin();
+					if (right.right.left == null && right.right.right == null) {
+						right.right = null;
+						return;
+					} else {
+						right.right.delete(right.value);
+						return;
+					}					
+				} else {
+					right.value = right.left.getMax();
+					if (right.left.left == null && right.left.right == null) {
+						right.left = null;
+						return;
+					} else {
+						right.left.delete(right.value);
+						return;
+					}					
+				}
+			} else if (toDelete > value && right != null) {
+				right.delete(toDelete);
+			} else if (toDelete < value && left != null) {
+				left.delete(toDelete);
+			} else {
+				System.out.println("Element to delete not found");
+				return;
+			}
+		}
+	} 
+		
+	public void deleteFirstElement() {
+		if (left != null) {
+			value = left.getMax();
+			if (left.left == null && left.right == null) {
+				left = null;
+				return;
+			} else {
+				left.delete(value);
+			}
+			
+		} else if (right != null) {
+			value = right.getMin();
+			if (right.left == null && right.right == null) {
+				right = null;
+				return;
+			} else {
+				right.delete(value);
+			}
+			
+		} else {
+			System.out.println("You want to delete the only element in the list. Please delete list altogether.");
+		}
+	}
 }
